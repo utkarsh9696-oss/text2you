@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>MyText — Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+<!-- Mobile sidebar overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<div class="dashboard">
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+
+    <div class="profile-header">
+      <div class="avatar-wrapper" id="avatarWrapper" title="Change profile picture">
+        <img id="profileAvatar" class="avatar" src="" alt="Your avatar" />
+        <div class="avatar-edit-icon">✏</div>
+      </div>
+      <input type="file" id="avatarInput" hidden accept="image/*" />
+
+      <div class="profile-info">
+        <h3 id="currentUsername">Username</h3>
+        <span class="status online">● Online</span>
+      </div>
+      <button id="logoutBtn" class="logout-btn">Logout</button>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="🔍 Search or start a new chat…" id="userSearch" autocomplete="off">
+    </div>
+
+    <div class="chat-list" id="chatList">
+      <!-- Chats load dynamically -->
+    </div>
+
+  </div>
+
+  <!-- Chat Window -->
+  <div class="chat-window no-chat" id="chatWindow">
+
+    <!-- Header -->
+    <div class="chat-header" id="chatHeader">
+      <button class="back-btn" id="backBtn">‹</button>
+      <img id="chatAvatar" class="chat-avatar" src="" alt="" />
+      <div class="chat-info">
+        <h3 id="chatUsername">Select a chat</h3>
+        <span id="chatStatus">Offline</span>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">💬</div>
+      <p>Welcome to MyText</p>
+      <small>Search for someone above or tap a chat to start messaging.</small>
+    </div>
+
+    <div class="messages" id="messages"></div>
+
+    <div class="typing-indicator" id="typingIndicator"></div>
+
+    <div class="message-input">
+      <input type="text" id="messageInput" placeholder="Type a message…" autocomplete="off">
+      <button id="sendBtn">Send</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

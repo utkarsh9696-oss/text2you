@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyText — Real-time Chat</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Render cold-start warning banner -->
+<div id="render-banner">
+  <div class="spinner"></div>
+  <p class="banner-text">
+    <span>Waking up the server...</span>
+    This may take up to 50 seconds on first load. Please wait.
+  </p>
+</div>
+
+<div class="auth-container">
+  <div class="auth-card">
+
+    <!-- Left Panel -->
+    <div class="auth-panel">
+      <h1>MyText</h1>
+      <p>Real-time messaging, redefined.<br>Connect instantly, anywhere.</p>
+      <button id="toggleBtn">Switch to Register</button>
+    </div>
+
+    <!-- Right Form Area -->
+    <div class="auth-forms">
+
+      <!-- Login Form -->
+      <form id="loginForm" class="form active">
+        <h2>Welcome back</h2>
+        <input type="email" placeholder="Email address" required id="loginEmail" autocomplete="email">
+        <input type="password" placeholder="Password" required id="loginPassword" autocomplete="current-password">
+        <button type="submit">Login</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="registerForm" class="form">
+        <h2>Create account</h2>
+        <input type="text" placeholder="Username" required id="registerUsername" autocomplete="username">
+        <input type="email" placeholder="Email address" required id="registerEmail" autocomplete="email">
+        <input type="password" placeholder="Password" required id="registerPassword" autocomplete="new-password">
+        <button type="submit">Register</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+  // Ping the server and hide the banner once it responds
+  const API_URL = window.MYTEXT_API_URL || "https://YOUR-APP-NAME.onrender.com";
+  const banner = document.getElementById("render-banner");
+  document.body.classList.add("banner-active");
+
+  async function wakeServer() {
+    try {
+      const res = await fetch(`${API_URL}/`, { method: "GET" });
+      if (res.ok) {
+        banner.classList.add("hidden");
+        document.body.classList.remove("banner-active");
+      } else {
+        setTimeout(wakeServer, 3000);
+      }
+    } catch (e) {
+      setTimeout(wakeServer, 3000);
+    }
+  }
+  wakeServer();
+</script>
+</body>
+</html>
