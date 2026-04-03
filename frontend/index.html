@@ -2,81 +2,65 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Textify — Dashboard</title>
-  <link rel="stylesheet" href="./css/dashboard.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Textify — Login</title>
+  <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 
-<!-- Mobile sidebar overlay -->
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-<!-- Toast container -->
-<div id="toast-container"></div>
-
-<div class="dashboard">
-
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-
-    <div class="profile-header">
-      <div class="avatar-wrapper" id="avatarWrapper" title="Change profile picture">
-        <img id="profileAvatar" class="avatar" src="" alt="Your avatar" />
-        <div class="avatar-edit-icon">✏</div>
-      </div>
-      <input type="file" id="avatarInput" hidden accept="image/*" />
-
-      <div class="profile-info">
-        <h3 id="currentUsername">Username</h3>
-        <span class="status online">● Online</span>
-      </div>
-      <button id="logoutBtn" class="logout-btn">Logout</button>
-    </div>
-
-    <div class="search-bar">
-      <input type="text" placeholder="🔍 Search or start a new chat…" id="userSearch" autocomplete="off">
-    </div>
-
-    <div class="chat-list" id="chatList">
-      <!-- Chats load dynamically -->
-    </div>
-
-  </div>
-
-  <!-- Chat Window -->
-  <div class="chat-window no-chat" id="chatWindow">
-
-    <!-- Header -->
-    <div class="chat-header" id="chatHeader">
-      <button class="back-btn" id="backBtn">‹</button>
-      <img id="chatAvatar" class="chat-avatar" src="" alt="" />
-      <div class="chat-info">
-        <h3 id="chatUsername">Select a chat</h3>
-        <span id="chatStatus">Offline</span>
-      </div>
-    </div>
-
-    <!-- Empty state -->
-    <div class="empty-state" id="emptyState">
-      <div class="empty-icon">💬</div>
-      <p>Welcome to Textify</p>
-      <small>Search for someone above or tap a chat to start messaging.</small>
-    </div>
-
-    <div class="messages" id="messages"></div>
-
-    <div class="typing-indicator" id="typingIndicator"></div>
-
-    <div class="message-input">
-      <input type="text" id="messageInput" placeholder="Type a message…" autocomplete="off">
-      <button id="sendBtn">Send</button>
-    </div>
-
-  </div>
-
+<div id="render-banner">
+  <div class="spinner"></div>
+  <p class="banner-text">
+    <span>Waking up the server...</span>
+    This may take up to 50 seconds on first load. Please wait.
+  </p>
 </div>
 
-<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
-<script src="./js/dashboard.js"></script>
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-panel">
+      <h1>Textify</h1>
+      <p>Real-time messaging, redefined.<br>Connect instantly, anywhere.</p>
+      <button id="toggleBtn">Switch to Register</button>
+    </div>
+    <div class="auth-forms">
+      <form id="loginForm" class="form active">
+        <h2>Welcome back</h2>
+        <input type="email" placeholder="Email address" required id="loginEmail">
+        <input type="password" placeholder="Password" required id="loginPassword">
+        <button type="submit">Login</button>
+      </form>
+      <form id="registerForm" class="form">
+        <h2>Create account</h2>
+        <input type="text" placeholder="Username" required id="registerUsername">
+        <input type="email" placeholder="Email address" required id="registerEmail">
+        <input type="password" placeholder="Password" required id="registerPassword">
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="./js/auth.js"></script>
+<script>
+  const API_URL = "https://textify-zluc.onrender.com";
+  const banner = document.getElementById("render-banner");
+  document.body.classList.add("banner-active");
+
+  async function wakeServer() {
+    try {
+      const res = await fetch(`${API_URL}/`);
+      if (res.ok) {
+        banner.classList.add("hidden");
+        document.body.classList.remove("banner-active");
+      } else {
+        setTimeout(wakeServer, 3000);
+      }
+    } catch (e) {
+      setTimeout(wakeServer, 3000);
+    }
+  }
+  wakeServer();
+</script>
 </body>
 </html>
