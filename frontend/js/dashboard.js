@@ -1,22 +1,22 @@
 // ============================
 // CONFIG
 // ============================
-// Change this to your Render backend URL after deploying
 const API_URL = "https://textify-zluc.onrender.com";
-// For local dev, comment above and uncomment:
-// const API_URL = "http://localhost:5000";
 
 // ============================
-// INITIALIZATION
+// INITIALIZATION - FIXED VERSION
 // ============================
 
 const token = localStorage.getItem("token");
-const user  = JSON.parse(localStorage.getItem("user"));
+const user = JSON.parse(localStorage.getItem("user"));
 
-if (!token || !user) {
+// FIX: Check if user exists before trying to use it
+if (!token || !user || !user.username) {
+  localStorage.clear();
   window.location.href = "index.html";
 }
 
+// Only run the rest if we have a valid user
 document.getElementById("currentUsername").innerText = user.username;
 
 const socket = io(API_URL);
