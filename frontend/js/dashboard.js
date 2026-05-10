@@ -1,7 +1,7 @@
 // ============================
 // CONFIG
 // ============================
-const API_URL = "https://textify-zluc.onrender.com";
+var API_URL = "https://textify-zluc.onrender.com";
 // const API_URL = "http://localhost:5000";
 
 // ============================
