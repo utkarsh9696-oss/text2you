@@ -2,7 +2,7 @@
 // CONFIG
 // ============================
 // Change this to your Render backend URL after deploying
-const API_URL = "https://textify-zluc.onrender.com";
+var API_URL = "https://textify-zluc.onrender.com";
 // For local dev, comment the line above and uncomment below:
 // const API_URL = "http://localhost:5000";
 
