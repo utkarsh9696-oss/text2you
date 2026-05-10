@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Textify — Login</title>
+  <title>Textify — Real-time Chat</title>
   <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
 
+<!-- Render cold-start warning banner -->
 <div id="render-banner">
   <div class="spinner"></div>
   <p class="banner-text">
@@ -18,38 +19,48 @@
 
 <div class="auth-container">
   <div class="auth-card">
+
+    <!-- Left Panel -->
     <div class="auth-panel">
       <h1>Textify</h1>
       <p>Real-time messaging, redefined.<br>Connect instantly, anywhere.</p>
       <button id="toggleBtn">Switch to Register</button>
     </div>
+
+    <!-- Right Form Area -->
     <div class="auth-forms">
+
+      <!-- Login Form -->
       <form id="loginForm" class="form active">
         <h2>Welcome back</h2>
-        <input type="email" placeholder="Email address" required id="loginEmail">
-        <input type="password" placeholder="Password" required id="loginPassword">
+        <input type="email" placeholder="Email address" required id="loginEmail" autocomplete="email">
+        <input type="password" placeholder="Password" required id="loginPassword" autocomplete="current-password">
         <button type="submit">Login</button>
       </form>
+
+      <!-- Register Form -->
       <form id="registerForm" class="form">
         <h2>Create account</h2>
-        <input type="text" placeholder="Username" required id="registerUsername">
-        <input type="email" placeholder="Email address" required id="registerEmail">
-        <input type="password" placeholder="Password" required id="registerPassword">
+        <input type="text" placeholder="Username" required id="registerUsername" autocomplete="username">
+        <input type="email" placeholder="Email address" required id="registerEmail" autocomplete="email">
+        <input type="password" placeholder="Password" required id="registerPassword" autocomplete="new-password">
         <button type="submit">Register</button>
       </form>
+
     </div>
   </div>
 </div>
 
 <script src="./js/auth.js"></script>
 <script>
-  const API_URL = "https://textify-zluc.onrender.com";
+  // Ping the server and hide the banner once it responds
+  const API_URL = window.MYTEXT_API_URL || "https://textify-zluc.onrender.com";
   const banner = document.getElementById("render-banner");
   document.body.classList.add("banner-active");
 
   async function wakeServer() {
     try {
-      const res = await fetch(`${API_URL}/`);
+      const res = await fetch(`${API_URL}/`, { method: "GET" });
       if (res.ok) {
         banner.classList.add("hidden");
         document.body.classList.remove("banner-active");

@@ -8,24 +8,20 @@
 </head>
 <body>
 
-<!-- Mobile sidebar overlay -->
 <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-<!-- Toast container -->
 <div id="toast-container"></div>
 
 <div class="dashboard">
 
-  <!-- Sidebar -->
+  <!-- ── SIDEBAR ── -->
   <div class="sidebar" id="sidebar">
 
     <div class="profile-header">
       <div class="avatar-wrapper" id="avatarWrapper" title="Change profile picture">
-        <img id="profileAvatar" class="avatar" src="" alt="Your avatar" />
-        <div class="avatar-edit-icon">✏</div>
+        <img id="profileAvatar" class="avatar" src="" alt="">
+        <div class="avatar-edit-icon">📷</div>
       </div>
-      <input type="file" id="avatarInput" hidden accept="image/*" />
-
+      <input type="file" id="avatarInput" hidden accept="image/*">
       <div class="profile-info">
         <h3 id="currentUsername">Username</h3>
         <span class="status online">● Online</span>
@@ -34,46 +30,51 @@
     </div>
 
     <div class="search-bar">
-      <input type="text" placeholder="🔍 Search or start a new chat…" id="userSearch" autocomplete="off">
+      <input type="text" placeholder="🔍 Search users…" id="userSearch" autocomplete="off">
     </div>
 
-    <div class="chat-list" id="chatList">
-      <!-- Chats load dynamically -->
+    <!-- Tabs -->
+    <div class="sidebar-tabs">
+      <button class="stab active" id="tabChats" onclick="showTab('chats')">Chats</button>
+      <button class="stab" id="tabAll" onclick="showTab('all')">All Users</button>
     </div>
+
+    <div class="chat-list" id="chatList"></div>
+    <div class="chat-list hidden" id="allUsersList"></div>
 
   </div>
 
-  <!-- Chat Window -->
+  <!-- ── CHAT WINDOW ── -->
   <div class="chat-window no-chat" id="chatWindow">
 
-    <!-- Header -->
     <div class="chat-header" id="chatHeader">
       <button class="back-btn" id="backBtn">‹</button>
-      <img id="chatAvatar" class="chat-avatar" src="" alt="" />
+      <img id="chatAvatar" class="chat-avatar" src="" alt="">
       <div class="chat-info">
         <h3 id="chatUsername">Select a chat</h3>
         <span id="chatStatus">Offline</span>
       </div>
     </div>
 
-    <!-- Empty state -->
     <div class="empty-state" id="emptyState">
       <div class="empty-icon">💬</div>
       <p>Welcome to Textify</p>
-      <small>Search for someone above or tap a chat to start messaging.</small>
+      <small>Search for someone or pick a chat to start messaging.</small>
     </div>
 
     <div class="messages" id="messages"></div>
-
     <div class="typing-indicator" id="typingIndicator"></div>
 
     <div class="message-input">
+      <button class="emoji-toggle" id="emojiToggle">😊</button>
+      <div class="emoji-picker" id="emojiPicker"></div>
       <input type="text" id="messageInput" placeholder="Type a message…" autocomplete="off">
-      <button id="sendBtn">Send</button>
+      <button id="sendBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
     </div>
 
   </div>
-
 </div>
 
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
