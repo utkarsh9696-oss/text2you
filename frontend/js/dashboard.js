@@ -9,7 +9,7 @@ var API_URL = "https://textify-zluc.onrender.com";
 // ============================
 const token = localStorage.getItem("token");
 const user  = JSON.parse(localStorage.getItem("user"));
-if (!token || !user || !user.username) { localStorage.clear(); window.location.href = "index.html"; }
+if (!token || !user) { localStorage.clear(); window.location.href = "index.html"; }
 
 document.getElementById("currentUsername").innerText = user.username;
 
@@ -161,7 +161,7 @@ function renderChatList(chats) {
     const other   = chat.participants.find(p => p._id !== user._id);
     const isOn    = onlineUsers.includes(other._id);
     const count   = unreadCounts[chat._id] || 0;
-    const lastMsg = chat.latestMessage;
+    const lastMsg = chat.lastMessage;
 
     const div = document.createElement("div");
     div.className = "chat-item" + (currentChat?._id === chat._id ? " active-chat" : "");
@@ -376,7 +376,7 @@ async function sendMessage() {
   addMessageToUI(msg, true);
 
   const idx = allChats.findIndex(c => c._id === currentChat._id);
-  if (idx !== -1) { allChats[idx].latestMessage = msg; renderChatList(allChats); }
+  if (idx !== -1) { allChats[idx].lastMessageMessage = msg; renderChatList(allChats); }
 }
 
 // ============================
@@ -386,7 +386,7 @@ socket.on("messageReceived", (newMsg) => {
   const chatId = newMsg.chatId._id || newMsg.chatId;
 
   const idx = allChats.findIndex(c => c._id === chatId);
-  if (idx !== -1) allChats[idx].latestMessage = newMsg;
+  if (idx !== -1) allChats[idx].lastMessageMessage = newMsg;
 
   if (currentChat && currentChat._id === chatId) {
     addMessageToUI(newMsg, true);
